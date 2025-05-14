@@ -6,10 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 // Import screens
 import SurveyScreen from "../screens/SurveyScreen";
 import ResultsScreen from "../screens/ResultsScreen";
+import NearbyDestinationsScreen from "../screens/NearbyDestinationsScreen";
 
 // Create stack navigators for each tab
 const SurveyStack = createNativeStackNavigator();
 const ResultsStack = createNativeStackNavigator();
+const NearbyStack = createNativeStackNavigator();
 
 // SurveyStack component
 const SurveyStackScreen = ({ route }) => {
@@ -45,6 +47,26 @@ const ResultsStackScreen = ({ route }) => {
   );
 };
 
+// NearbyStack component
+const NearbyStackScreen = ({ route }) => {
+  // Extract user info from route params
+  const { userName, email } = route.params || {};
+
+  // Also extract travel type if present (from Survey data)
+  const { travelType } = route.params || {};
+
+  return (
+    <NearbyStack.Navigator>
+      <NearbyStack.Screen
+        name="NearbyDestinations"
+        component={NearbyDestinationsScreen}
+        options={{ headerShown: false }}
+        initialParams={{ userName, email, travelType }}
+      />
+    </NearbyStack.Navigator>
+  );
+};
+
 // Create bottom tab navigator
 const Tab = createBottomTabNavigator();
 
@@ -62,6 +84,8 @@ const TabNavigator = ({ route }) => {
             iconName = focused ? "document-text" : "document-text-outline";
           } else if (route.name === "Results") {
             iconName = focused ? "list" : "list-outline";
+          } else if (route.name === "Nearby") {
+            iconName = focused ? "location" : "location-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -79,6 +103,11 @@ const TabNavigator = ({ route }) => {
       <Tab.Screen
         name="Results"
         component={ResultsStackScreen}
+        initialParams={{ userName, email }}
+      />
+      <Tab.Screen
+        name="Nearby"
+        component={NearbyStackScreen}
         initialParams={{ userName, email }}
       />
     </Tab.Navigator>

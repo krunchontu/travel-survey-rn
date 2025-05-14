@@ -111,11 +111,31 @@ const SurveyScreen = ({ navigation, route }) => {
         `${formData.age}-year-old fan of ${formData.travelType}\n` +
         `Dreaming of ${formData.country}\n` +
         `Budget: $${formData.budget}\n\n` +
-        `We recommend trying ${recommendation}!`
+        `We recommend trying ${recommendation}!`,
+      [
+        {
+          text: "View Survey Results",
+          onPress: () =>
+            navigation.navigate("Results", {
+              formData,
+              recommendation,
+              userName,
+              email,
+            }),
+        },
+        {
+          text: "Find Nearby Destinations",
+          onPress: () => {
+            // Navigate to the Nearby tab with the selected travel type
+            navigation.navigate("Nearby", {
+              userName,
+              email,
+              travelType: formData.travelType,
+            });
+          },
+        },
+      ]
     );
-
-    // Navigate to results screen if needed
-    // navigation.navigate('Results', { formData, recommendation, userName, email });
   };
 
   return (

@@ -31,6 +31,18 @@ const HomeScreen = ({ navigation, route }) => {
         >
           <Text style={styles.buttonText}>Go to Surveys</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.locationButton]}
+          onPress={() =>
+            navigation.navigate("TabNavigator", {
+              screen: "Nearby",
+              params: { userName, email },
+            })
+          }
+        >
+          <Text style={styles.buttonText}>Find Nearby Destinations</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -98,6 +110,10 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "600",
+  },
+  locationButton: {
+    backgroundColor: "#4A90E2",
+    marginTop: 15,
   },
 });
 
